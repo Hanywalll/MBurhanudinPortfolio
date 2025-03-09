@@ -54,11 +54,20 @@
 
             // Options for the PDF
             const options = {
-                margin: 10,
+                margin: 0, // No margin
                 filename: 'CV_Muhammad_Burhanudin.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                html2canvas: {
+                    scale: 2, // Increase scale for better quality
+                    useCORS: true, // Handle cross-origin images
+                    width: 794, // A4 width in pixels (210mm * 3.78)
+                    height: 1123, // A4 height in pixels (297mm * 3.78)
+                },
+                jsPDF: {
+                    unit: 'mm',
+                    format: 'a4',
+                    orientation: 'portrait',
+                }
             };
 
             // Convert the image to PDF
