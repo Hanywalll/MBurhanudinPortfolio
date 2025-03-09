@@ -45,7 +45,7 @@
             color: #ffffff;
             border: none;
             padding: 8px 15px;
-            font-size: 40px;
+            font-size: 20px; /* Default untuk HP */
             border-radius: 4px;
             cursor: pointer;
             display: flex;
@@ -53,6 +53,11 @@
             gap: 5px;
             transform: scale(1);
             pointer-events: auto; /* Memungkinkan tombol tetap dapat diklik */
+        }
+        @media (min-width: 1024px) {
+            button {
+                font-size: 40px; /* Ukuran font lebih besar untuk layar lebar */
+            }
         }
         button:hover {
             background-color: #ff4d4d;
@@ -92,7 +97,7 @@
                 filename: 'CV Muhammad Burhanudin.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                jsPDF: { unit: 'mm', format: 'a3', orientation: 'portrait' } /* Format A3 */
             };
 
             html2pdf().from(element).set(options).save();
