@@ -12,19 +12,58 @@
         }
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
         }
         img {
             max-width: 100%;
-            max-height: 100vh;
+            max-height: 80vh;
             object-fit: contain;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
+    <!-- Include html2pdf.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
     <img src="img/cv.jpg" alt="CV Muhammad Burhanudin">
+    <button id="downloadBtn">Download as PDF</button>
+
+    <script>
+        // Function to download the image as PDF
+        document.getElementById('downloadBtn').addEventListener('click', function () {
+            // Select the image element
+            const element = document.querySelector('img');
+
+            // Options for the PDF
+            const options = {
+                margin: 10,
+                filename: 'CV_Muhammad_Burhanudin.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Convert the image to PDF
+            html2pdf().from(element).set(options).save();
+        });
+    </script>
 </body>
 </html>
