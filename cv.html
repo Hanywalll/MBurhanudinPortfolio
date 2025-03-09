@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Muhammad Burhanudin</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -13,67 +12,80 @@
         }
         body {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #000000;
+            font-family: Arial, sans-serif;
+            overflow: auto;
+        }
+        #cv-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-origin: center;
         }
         img {
             max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
+            height: auto;
         }
         button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
+            position: absolute;
+            bottom: 3%;
+            right: 3%;
+            background-color: #003366; /* Biru Tua */
+            color: #ffffff;
             border: none;
+            padding: 20px 30px;
+            font-size: 20px;
+            border-radius: 10px;
             cursor: pointer;
-            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #002244;
         }
-    </style>
-</head>
-<body>
-    <img id="cvImage" src="img/cv.jpg" alt="CV Muhammad Burhanudin">
-    <button onclick="downloadPDF()">Download PDF</button>
-
-    <script>
-        async function downloadPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF("p", "mm", "a4");
-
-            const img = document.getElementById("cvImage");
-
-            // Pastikan gambar telah dimuat sebelum konversi ke PDF
-            img.onload = function () {
-                const canvas = document.createElement("canvas");
-                const ctx = canvas.getContext("2d");
-
-                // Sesuaikan ukuran gambar agar pas dalam PDF (A4 = 210 x 297 mm)
-                const imgWidth = 210;
-                const imgHeight = (img.naturalHeight / img.naturalWidth) * imgWidth;
-
-                canvas.width = img.naturalWidth;
-                canvas.height = img.naturalHeight;
-                ctx.drawImage(img, 0, 0);
-
-                const imgData = canvas.toDataURL("image/jpeg");
-
-                doc.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
-                doc.save("CV Muhammad Burhanudin.pdf");
-            };
-
-            // Jika gambar sudah dimuat sebelumnya, langsung eksekusi fungsi onload
-            if (img.complete) {
-                img.onload();
+        button i {
+            font-size: 12px;
+        }
+        
+        /* Zoom effect */
+        @media (min-width: 1024px) {
+            body {
+                zoom: 1.5; /* Sesuaikan skala agar tombol dan CV ikut membesar saat zoom */
             }
         }
+    </style>
+    <!-- Include Font Awesome untuk ikon -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <!-- Include html2pdf.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div id="cv-container">
+        <img src="img/cv.jpg" alt="CV Muhammad Burhanudin">
+        <button id="downloadBtn">
+            <i class="fas fa-file-download"></i> Download CV
+        </button>
+    </div>
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function () {
+            const element = document.getElementById('cv-container');
+
+            const options = {
+                margin: 10,
+                filename: 'CV_Muhammad_Burhanudin.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().from(element).set(options).save();
+        });
     </script>
 </body>
 </html>
