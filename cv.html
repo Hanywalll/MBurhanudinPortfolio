@@ -56,7 +56,7 @@
 </head>
 <body>
     <img id="cvImage" src="img/cv.jpg" alt="CV Muhammad Burhanudin">
-    <button onclick="downloadPDF()"><i class="fas fa-file-pdf"></i> Download CV</button>
+    <button id="downloadBtn"><i class="fas fa-file-pdf"></i> Download CV</button>
 
     <script>
         document.addEventListener('gesturestart', function (e) {
@@ -68,33 +68,26 @@
             }
         }, { passive: false });
 
-        async function downloadPDF() {
+        document.getElementById('downloadBtn').addEventListener('click', function () {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF("p", "mm", "a4");
-
             const img = document.getElementById("cvImage");
 
-            img.onload = function () {
-                const canvas = document.createElement("canvas");
-                const ctx = canvas.getContext("2d");
-
-                const imgWidth = 210;
-                const imgHeight = (img.naturalHeight / img.naturalWidth) * imgWidth;
-
-                canvas.width = img.naturalWidth;
-                canvas.height = img.naturalHeight;
-                ctx.drawImage(img, 0, 0);
-
-                const imgData = canvas.toDataURL("image/jpeg");
-
-                doc.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
-                doc.save("CV Muhammad Burhanudin.pdf");
-            };
-
-            if (img.complete) {
-                img.onload();
-            }
-        }
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            
+            const imgWidth = 210;
+            const imgHeight = (img.naturalHeight / img.naturalWidth) * imgWidth;
+            
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            ctx.drawImage(img, 0, 0);
+            
+            const imgData = canvas.toDataURL("image/jpeg");
+            
+            doc.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
+            doc.save("CV Muhammad Burhanudin.pdf");
+        });
     </script>
 </body>
 </html>
