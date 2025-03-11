@@ -49,6 +49,9 @@
         button:hover {
             background-color: #8d1313; /* Warna lebih gelap saat hover */
         }
+        button:active {
+            background-color: #b71c1c; /* Warna lebih terang saat ditekan */
+        }
         button i {
             font-size: 18px;
         }
@@ -69,6 +72,8 @@
         }, { passive: false });
 
         document.getElementById('downloadBtn').addEventListener('click', function () {
+            const button = this;
+            button.style.pointerEvents = 'none'; // Mencegah tombol ditekan berulang tanpa selesai
             setTimeout(() => {
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF("p", "mm", "a4");
@@ -88,6 +93,8 @@
                 
                 doc.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
                 doc.save("CV Muhammad Burhanudin.pdf");
+                
+                button.style.pointerEvents = 'auto'; // Mengembalikan fungsi tombol setelah selesai
             }, 500); // Tambahkan delay untuk kompatibilitas Android
         });
     </script>
