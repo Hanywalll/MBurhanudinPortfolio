@@ -69,24 +69,26 @@
         }, { passive: false });
 
         document.getElementById('downloadBtn').addEventListener('click', function () {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF("p", "mm", "a4");
-            const img = document.getElementById("cvImage");
+            setTimeout(() => {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF("p", "mm", "a4");
+                const img = document.getElementById("cvImage");
 
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            
-            const imgWidth = 210;
-            const imgHeight = (img.naturalHeight / img.naturalWidth) * imgWidth;
-            
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-            ctx.drawImage(img, 0, 0);
-            
-            const imgData = canvas.toDataURL("image/jpeg");
-            
-            doc.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
-            doc.save("CV Muhammad Burhanudin.pdf");
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                
+                const imgWidth = 210;
+                const imgHeight = (img.naturalHeight / img.naturalWidth) * imgWidth;
+                
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                ctx.drawImage(img, 0, 0);
+                
+                const imgData = canvas.toDataURL("image/jpeg");
+                
+                doc.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
+                doc.save("CV Muhammad Burhanudin.pdf");
+            }, 500); // Tambahkan delay untuk kompatibilitas Android
         });
     </script>
 </body>
